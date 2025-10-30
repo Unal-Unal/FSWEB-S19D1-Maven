@@ -10,7 +10,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
@@ -31,8 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-
-@WebMvcTest(value = {ApplicationPropertiesAndControllerTests.class, FruitController.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@AutoConfigureMockMvc
 @ExtendWith(ResultAnalyzer2.class)
 class ApplicationPropertiesAndControllerTests {
 
@@ -62,7 +64,7 @@ class ApplicationPropertiesAndControllerTests {
     void serverPortIsSetTo8585() {
 
         String serverPort = env.getProperty("server.port");
-        assertThat(serverPort).isEqualTo("8080");
+        assertThat(serverPort).isEqualTo("8585");
 
 
         String datasourceUrl = env.getProperty("spring.datasource.url");
